@@ -10298,12 +10298,18 @@ class Exercise {
         mediaContent.appendChild(header);
         mediaContent.appendChild(control);
 
+        this.form.addEventListener("submit", (e) => {
+            this.check();
+            e.preventDefault();
+        });
+
         return main;
     }
 
     createWrapper() {
         const div = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["domElCreate"])('div');
         div.innerHTML = wrapperTemplate.trim();
+        this.form = div.querySelector("form");
         return div;
     }
 

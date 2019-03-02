@@ -30,12 +30,18 @@ export class Exercise {
         mediaContent.appendChild(header);
         mediaContent.appendChild(control);
 
+        this.form.addEventListener("submit", (e) => {
+            this.check();
+            e.preventDefault();
+        });
+
         return main;
     }
 
     createWrapper() {
         const div = domElCreate('div');
         div.innerHTML = wrapperTemplate.trim();
+        this.form = div.querySelector("form");
         return div;
     }
 
