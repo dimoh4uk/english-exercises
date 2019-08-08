@@ -3,7 +3,7 @@ const ListCopyFiles = require("./list-copy-files");
 const CopyPlugin = require("copy-webpack-plugin");
 const WriteFileWebpackPlugin = require("write-file-webpack-plugin");
 
-console.log("ListCopyFiles", ListCopyFiles);
+// console.log("ListCopyFiles", ListCopyFiles);
 
 module.exports = {
     mode: "development",

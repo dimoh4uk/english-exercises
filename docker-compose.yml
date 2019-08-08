@@ -1,0 +1,18 @@
+version: '3'
+services:
+  api-english-exercises:
+    container_name: api-english-exercises
+    environment:
+      - DB_PATH=http://0.0.0.0:8080
+    build:
+      context: ./backend
+    ports:
+      - 8888:3000
+  frontend-english-exercises:
+    container_name: frontend-english-exercises
+    environment:
+      - API_URL=http://0.0.0.0:8888
+    build:
+      context: ./frontend
+    ports:
+      - 7777:8080
