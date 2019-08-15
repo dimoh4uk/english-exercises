@@ -9,11 +9,9 @@ WORKDIR /src
 
 COPY . ./
 
-RUN set -x \
- && npm install
-
-RUN chmod +x ./start.sh
+RUN chmod +x ./installation/start.sh
 
 EXPOSE ${SERVICE_PORT}
 
-CMD ./start.sh
+CMD ./installation/start.sh
+

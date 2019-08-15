@@ -11,8 +11,8 @@ APP.get('/', function (req, res) {
 });
 APP.get('/users', function (req, res) {
     const user = {
-        "name": "test user",
-        "age": "30"
+        "name": "test user123131",
+        "age": "311"
     };
     res.send([user, user, user]);
 });
