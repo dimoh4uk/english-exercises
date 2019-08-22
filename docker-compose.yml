@@ -3,22 +3,32 @@ services:
   api-english-exercises:
     container_name: api-english-exercises
     environment:
-      - DB_PATH=http://0.0.0.0:8080
+      - DB_URI=0.0.0.0:27017
     build:
       context: ./backend
     volumes:
       - ./backend/index.js:/src/index.js
     ports:
       - 8888:3000
-  frontend-english-exercises:
-    container_name: frontend-english-exercises
+
+  mongo:
+    image: mongo
+    restart: always
     environment:
-      - API_URL=http://0.0.0.0:8888
-    build:
-      context: ./frontend
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1234
     ports:
-      - 7777:8080
-  mongoDB:
-    image: mongo:latest
-    env_file:
-      - backend/env/mongo.env
+      - 27017:27017
+
+#  frontend-english-exercises:
+#    container_name: frontend-english-exercises
+#    environment:
+#      - API_URL=http://0.0.0.0:8888
+#    build:
+#      context: ./frontend
+#    ports:
+#      - 7777:8080
+#  mongoDB:
+#    image: mongo:latest
+#    env_file:
+#      - backend/env/mongo.env

@@ -1,24 +1,53 @@
 const express = require('express');
-
 const APP = express();
+const MongoClient = require('mongodb').MongoClient;
+const ENVS = process.env;
+
+const state = {};
+
+console.log("url=>>>>>", ENVS.DB_URI);
+
+(async () => {
+    const DB_URI = ENVS.DB_URI;
 
 
-APP.get('/', function (req, res) {
-    res.send({
-        "name": "test user",
-        "age": "30"
+    await new Promise((resolve, reject) => {
+        MongoClient.connect(DB_URI, (error, database) => {
+            if (!error) {
+                state.connect = database;
+
+            } else {
+                reject(error);
+            }
+            resolve(state.connect);
+        })
     });
-});
-APP.get('/users', function (req, res) {
-    const user = {
-        "name": "test user123131",
-        "age": "311"
-    };
-    res.send([user, user, user]);
-});
 
-APP.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
-});
+    APP.post('/vocabulary', async (request, response) => {
+        await new Promise((r) => {
+            console.log("asdasd=>",request.body);
+            state.connect.collection("vocabulary").insertOne(request.body, () => {
+                r();
+            });
+        });
+        response.sendStatus(200);
+    });
 
-console.log("loh log+>1");
+    APP.get('/vocabulary', async (request, response) => {
+        const vocabulary = await new Promise((r) => {
+            state.connect.collection("vocabulary").find()
+                .toArray((d) => {
+                    r(d);
+                })
+        });
+        response.send(vocabulary)
+    });
+
+
+    APP.listen(3000, function () {
+        console.log('Example app listening on port 3000!');
+    });
+
+    console.log("loh log+>1");
+
+})();
